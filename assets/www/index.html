@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Cordova</title>
+<script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
+<script type="text/javascript" charset="utf-8" src="SMSPlugin.js"></script> 
+
+<script type="text/javascript">
+
+	
+	function onBodyLoad()
+	{		
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}
+	
+	
+	function onDeviceReady()
+	{
+		navigator.notification.alert("Cordova is working")
+	}
+        
+    function callSMSReader() {
+    	SmsPlugin.callNativeFunction( nativePluginResultHandler, nativePluginErrorHandler);
+    }
+                                       
+    function nativePluginResultHandler (result) {
+    	var txt = "";
+    	  for(var i = 0; i < result.messages.length; i++){
+    	          txt += "<b>Number:</b>" +  result.messages[i].number + " ";
+    	          txt += "<b> Message:</b>" + result.messages[i].text + "!<br />";
+    	  }
+    	  document.getElementById("sms").innerHTML=txt;
+    }
+
+    function nativePluginErrorHandler (error) {
+       alert("ERROR: \r\n"+error );
+    }
+    </script>    
+</head>
+
+ <h1>Hello World</h1>
+   
+   <body onload="onBodyLoad()">
+	       <p>
+	        Cardova SMS Reader
+		   <button onclick="callSMSReader();">Click to display Messages</button>
+		   <div id="sms"></div>
+		</p>
+
+	</body>
+</html>
